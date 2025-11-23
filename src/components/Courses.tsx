@@ -48,7 +48,7 @@ const Courses: React.FC = () => {
       duration: "3 Months",
       level: "Intermediate",
       oldPrice: "₹25,000",
-      price: "₹14,999",
+      price: "₹9,999",
     },
     {
       title: "NETWORK PENETRATION TESTING",
@@ -57,7 +57,7 @@ const Courses: React.FC = () => {
       duration: "2.5 Months",
       level: "Pro",
       oldPrice: "₹22,000",
-      price: "₹12,999",
+      price: "₹9,999",
     },
     {
       title: "WEB APP PENETRATION TESTING",
@@ -66,7 +66,7 @@ const Courses: React.FC = () => {
       duration: "2 Months",
       level: "Intermediate",
       oldPrice: "₹20,000",
-      price: "₹11,999",
+      price: "₹9,999",
     },
     {
       title: "ANDROID HACKING",
@@ -75,7 +75,7 @@ const Courses: React.FC = () => {
       duration: "2 Months",
       level: "Pro",
       oldPrice: "₹18,000",
-      price: "₹10,999",
+      price: "₹9,999",
     },
     {
       title: "HACKING WITH AI",
@@ -93,7 +93,7 @@ const Courses: React.FC = () => {
       duration: "2 Months",
       level: "Beginner",
       oldPrice: "₹17,000",
-      price: "₹8,999",
+      price: "₹9,999",
     },
   ];
 
@@ -150,7 +150,7 @@ const Courses: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4, delay: i * 0.1 }}
-          className="bg-[#0a0f14] border border-[#00ff9d88] rounded-xl p-6 text-center shadow-[0_0_25px_#00ff9d44] hover:shadow-[0_0_35px_#00ff9daa] hover:border-[#00ff9d] transition-all duration-300 cursor-pointer group"
+          className="w-300 bg-[#0a0f14] border border-[#00ff9d88] rounded-xl p-6 text-center shadow-[0_0_25px_#00ff9d44] hover:shadow-[0_0_35px_#00ff9daa] hover:border-[#00ff9d] transition-all duration-300 cursor-pointer group"
         >
           {/* Icon */}
           <div className="flex justify-center text-[#00ff9d] mb-4 text-5xl group-hover:scale-110 transition-transform">

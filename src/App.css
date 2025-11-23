@@ -2,9 +2,22 @@
 
 /* Courses */
 .cards {
-  display: grid;
+  width: 100%;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 20px; */
+  display: grid;
+  justify-content: center;
+  flex-direction: row;
+  /* border:1px solid red; */
+}
+/* For screens larger than 1024px (laptop/tablet) */
+@media (min-width: 1024px) {
+  .cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -35,5 +48,25 @@
 @keyframes scan {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
+}
+/* About us */
+.left1, .right1{
+  /* width: 50%; */
+  /* border:1px solid red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icons a{
+  font-size: 2rem;
+  /* border:1px solid red; */
+}
+/* Navbar */
+@media (max-width: 1024px)
+{
+  .menu{
+  display: none;
+}
 }
 

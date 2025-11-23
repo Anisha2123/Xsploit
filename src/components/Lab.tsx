@@ -1,44 +1,91 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ShieldCheck, Terminal, Flag } from "lucide-react";
 
-const Labs = () => {
+const Labs: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // Floating ASCII characters animation
+  useEffect(() => {
+    const canvas = canvasRef.current;
+if (!canvas) return;
+const ctx = canvas.getContext("2d");
+if (!ctx) return;
+
+const resizeCanvas = () => {
+  const section = canvas.parentElement;
+  canvas.width = window.innerWidth;
+  canvas.height = section ? section.offsetHeight : window.innerHeight;
+};
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+    const particles = Array.from({ length: 150 }).map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      char: chars[Math.floor(Math.random() * chars.length)],
+      speed: 0.5 + Math.random() * 1.5,
+      size: 12 + Math.random() * 8,
+    }));
+
+    let animationFrame: number;
+
+    const draw = () => {
+      ctx.fillStyle = "#080b0e"; // Dark background
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff9d"; // Neon green
+      ctx.font = "bold 14px monospace";
+
+      particles.forEach((p) => {
+        ctx.fillText(p.char, p.x, p.y);
+        p.y += p.speed;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+          p.char = chars[Math.floor(Math.random() * chars.length)];
+        }
+      });
+
+      animationFrame = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      window.removeEventListener("resize", resizeCanvas);
+    };
+  }, []);
+
   return (
-    <section className="py-20 bg-[#080b0e] text-white relative overflow-hidden">
+    <section className="py-24 bg-[#080b0e] text-white relative overflow-hidden">
+      {/* ASCII floating canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 opacity-25 pointer-events-none"></canvas>
 
-      {/* Background neon grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(#0f141a_1px,transparent_1px),linear-gradient(90deg,#0f141a_1px,transparent_1px)] 
-                      bg-[size:40px_40px] opacity-30"></div>
-
-      {/* Title */}
+      {/* Header */}
       <motion.h2
         initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center font-mono text-4xl font-bold mb-12 tracking-wider text-[#00ff9d]
-                   drop-shadow-[0_0_10px_#00ff9d]"
+        whileInView={{ opacity: 1, y: 0 }}
+        className="text-center font-mono text-4xl font-bold mb-12 tracking-wide text-[#00ff9d] drop-shadow-[0_0_12px_#00ff9d]"
       >
-        LIVE PRACTICAL LABS / VM ENVIRONMENT
+        LIVE CYBER PRACTICAL LAB ENVIRONMENT
       </motion.h2>
 
-      {/* Container */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        
+      {/* Cards Row */}
+      <div className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
         {/* Card 1 */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55] 
-                     shadow-[0_0_25px_#00ff9d33] transition-all hover:shadow-[0_0_30px_#00ff9d88]"
+          className="relative bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55] shadow-[0_0_25px_#00ff9d33] hover:shadow-[0_0_35px_#00ff9daa] transition-all cursor-pointer"
         >
-          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]">
-            <ShieldCheck />
-          </div>
-          <h3 className="text-2xl font-mono text-[#00ff9d] mb-3 text-center">
-            Attack & Defense Simulation
-          </h3>
+          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]"><ShieldCheck /></div>
+          <h3 className="text-2xl font-mono text-center text-[#00ff9d] mb-2">Attack & Defense Lab</h3>
           <p className="text-gray-300 text-sm text-center leading-relaxed">
-            Train on real-world cyber ranges where attackers and defenders 
-            fight in real time to exploit and secure systems.
+            Hands-on cyber lab where students attack & defend systems like real professionals.
           </p>
         </motion.div>
 
@@ -46,18 +93,12 @@ const Labs = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55] 
-                     shadow-[0_0_25px_#00ff9d33] hover:shadow-[0_0_30px_#00ff9d88]"
+          className="relative bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55] shadow-[0_0_25px_#00ff9d33] hover:shadow-[0_0_35px_#00ff9daa] transition-all cursor-pointer"
         >
-          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]">
-            <Terminal />
-          </div>
-          <h3 className="text-2xl font-mono text-[#00ff9d] mb-3 text-center">
-            Virtual Machine Lab Access
-          </h3>
+          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]"><Terminal /></div>
+          <h3 className="text-2xl font-mono text-center text-[#00ff9d] mb-2">Virtual Machine Lab</h3>
           <p className="text-gray-300 text-sm text-center leading-relaxed">
-            Pre-configured vulnerable machines for penetration testing
-            including Web Apps, Linux, Active Directory & Cloud services.
+            Preloaded hacking VMs & vulnerable servers for safe hands-on exploit practice.
           </p>
         </motion.div>
 
@@ -65,28 +106,15 @@ const Labs = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55]
-                     shadow-[0_0_25px_#00ff9d33] hover:shadow-[0_0_30px_#00ff9d88]"
+          className="relative bg-[#0a0f14] p-6 rounded-xl border border-[#00ff9d55] shadow-[0_0_25px_#00ff9d33] hover:shadow-[0_0_35px_#00ff9daa] transition-all cursor-pointer"
         >
-          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]">
-            <Flag />
-          </div>
-          <h3 className="text-2xl font-mono text-[#00ff9d] mb-3 text-center">
-            CTF Challenges
-          </h3>
+          <div className="flex justify-center mb-4 text-5xl text-[#00ff9d]"><Flag /></div>
+          <h3 className="text-2xl font-mono text-center text-[#00ff9d] mb-2">CTF Challenges</h3>
           <p className="text-gray-300 text-sm text-center leading-relaxed">
-            Capture the Flag exercises, exploit challenges & offensive red-team
-            puzzles designed to build problem-solving and strategy skills.
+            Capture the Flag competitions & practical puzzles to sharpen hacking skills.
           </p>
         </motion.div>
-
       </div>
-
-      {/* Terminal Footer Banner */}
-      <p className="text-center mt-10 font-mono text-[#00ff9d99] text-sm">
-         Access real attack environments — no simulations, real hacking tools
-      </p>
-
     </section>
   );
 };
